@@ -1,37 +1,14 @@
-package main
+package db
 
 import (
-	"fmt"
-	"log"
-	"net/http"
 	"os"
-	"time"
-
-	"github.com/shinji1095/anonymous_bk/db"
 
 	"github.com/jinzhu/gorm"
-	"github.com/labstack/echo"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func main() {
-	db := db.SqlConnect()
-	defer db.Close()
-	e := echo.New()
-	Router(e)
-	e.Logger.Fatal(e.Start(":8080"))
-}
-
-func Router(e *echo.Echo) {
-	e.GET("/", root)
-}
-
-func root(c echo.Context) error {
-	return c.JSON(http.StatusOK, "hello")
-}
-
-func sqlConnect() (database *gorm.DB) {
+func SqlConnect() (database *gorm.DB) {
 	var DBMS string
 	var USER string
 	var PASS string
@@ -76,4 +53,3 @@ func sqlConnect() (database *gorm.DB) {
 	fmt.Println("DB接続成功")
 
 	return db
-}
