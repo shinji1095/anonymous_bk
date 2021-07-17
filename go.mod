@@ -1,4 +1,4 @@
-module github.com/shinji1095/anonymous_bk
+module anonymous_bk
 
 go 1.16
 

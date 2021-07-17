@@ -1,7 +1,10 @@
 package db
 
 import (
+	"fmt"
+	"log"
 	"os"
+	"time"
 
 	"github.com/jinzhu/gorm"
 
@@ -53,3 +56,4 @@ func SqlConnect() (database *gorm.DB) {
 	fmt.Println("DB接続成功")
 
 	return db
+}
