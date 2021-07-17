@@ -1,4 +1,4 @@
-package db
+package main
 
 import (
 	"fmt"
@@ -11,7 +11,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func SqlConnect() (database *gorm.DB) {
+func sqlConnect() (database *gorm.DB) {
 	var DBMS string
 	var USER string
 	var PASS string

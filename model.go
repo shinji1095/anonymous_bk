@@ -1,15 +1,15 @@
-package models
+package main
 
 import (
-	"flag"
+	"net/http"
 	"time"
 
-	"github.com/shinji1095/anonymous_bk/db"
+	"github.com/labstack/echo"
 )
 
 type User struct {
 	Id   uint
-	name string
+	Name string
 }
 
 type Belong struct {
@@ -19,7 +19,7 @@ type Belong struct {
 
 type Group struct {
 	Id   uint
-	name string
+	Name string
 }
 
 type Share struct {
@@ -29,37 +29,37 @@ type Share struct {
 
 type Assignment struct {
 	Id   uint
-	name string
-	due  time.Time
+	Name string
+	Due  time.Time
 }
 
 type Do struct {
 	UserID       uint
 	AssignmentID uint
-	status       uint
-	ranking      uint
+	Status       uint
+	Ranking      uint
 	UpdateAt     time.Time
 }
 
-func main() {
-	flag.Parse()
-	command := flag.Arg(0)
+func migrate(c echo.Context) error {
+	command := c.Param("command")
 
 	// go run model.go up
 	// マイグレーションの実行
 	switch command {
 	case "up":
-
+		upTable()
 	case "down":
-		migrate()
+		downTable()
 	}
 
 	// go run model.go down
 	// マイグレーションの削除
+	return c.JSON(http.StatusOK, "migration complete")
 }
 
-func migrate() {
-	db := db.SqlConnect()
+func upTable() {
+	db := sqlConnect()
 	defer db.Close()
 
 	db.AutoMigrate(
@@ -74,7 +74,7 @@ func migrate() {
 }
 
 func downTable() {
-	db := db.SqlConnect()
+	db := sqlConnect()
 	defer db.Close()
 
 	db.DropTable(
