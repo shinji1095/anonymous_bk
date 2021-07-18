@@ -63,6 +63,7 @@ func router(e *echo.Echo) {
 	e.GET("/", root)
 	e.GET("/migrate/:command", migrate)
 	e.POST("/user", post_user)
+	e.POST("validate/user", validate_user)
 }
 
 func root(c echo.Context) error {
@@ -179,12 +180,56 @@ func post_user(c echo.Context) (err error) {
 
 	user := new(User)
 	if err = c.Bind(user); err != nil {
-		message := PostUserMessageFaild{"Registration successfull", false, err.Error()}
+		message := PostUserMessageFaild{"Registration failed", false, err.Error()}
 		return echo.NewHTTPError(http.StatusBadRequest, message)
 	}
 
 	db.Create(&user)
 	message := PostUserMessageSuccess{"Registration successfull", true}
+
+	return c.JSON(http.StatusOK, message)
+}
+
+type ValidateUserErrorMessage struct {
+	Message string `json:"message"`
+	Status  bool   `json:"status"`
+	Error   string `json:"error"`
+}
+
+type ValidateUserSuccessMessage struct {
+	Message string `json:"message"`
+	Status  bool   `json:"status"`
+	User    User   `json:"user"`
+}
+
+func validate_user(c echo.Context) (err error) {
+	db := sqlConnect()
+	defer db.Close()
+
+	user := new(User)
+	if err = c.Bind(user); err != nil {
+		message := ValidateUserErrorMessage{"vaiudation failed", false, err.Error()}
+		return echo.NewHTTPError(http.StatusBadRequest, message)
+	}
+
+	validate := new(User)
+	fmt.Print(user.Email)
+	fmt.Print(user.Password)
+
+	if err := db.Where("email = ? AND password = ?", user.Email, user.Password).First(&validate); err.Error != nil {
+		message := ValidateUserErrorMessage{
+			"validation failed",
+			false,
+			"cannot find any records",
+		}
+		return echo.NewHTTPError(http.StatusBadRequest, message)
+	}
+
+	message := ValidateUserSuccessMessage{
+		"Validation successfull",
+		true,
+		*validate,
+	}
 
 	return c.JSON(http.StatusOK, message)
 }

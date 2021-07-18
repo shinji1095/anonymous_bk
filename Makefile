@@ -23,3 +23,10 @@ test-user-reg:
 	-H 'Content-Type: application/json' \
   	-d '{"firstname":"eto","lastname":"shinji", "password":"ppp", "email":"joe@invalid-domain"}'
 
+pass=ppp
+test-user-val:
+	curl -X POST http://localhost:8080/validate/user \
+	-H 'Content-Type: application/json' \
+  	-d '{"password":"$(pass)", "email":"joe@invalid-domain"}'
+
+
