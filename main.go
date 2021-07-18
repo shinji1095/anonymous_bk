@@ -15,8 +15,11 @@ import (
 )
 
 type User struct {
-	Id   uint   `json:"id"`
-	Name string `json:"name"`
+	Id        uint   `json:"id"`
+	Firstname string `json:"firstname"`
+	Lastname  string `json:"lastname"`
+	Email     string `json:"email"`
+	Password  string `json:"password"`
 }
 
 type Belong struct {
@@ -59,7 +62,7 @@ func main() {
 func router(e *echo.Echo) {
 	e.GET("/", root)
 	e.GET("/migrate/:command", migrate)
-	e.POST("/user", register_user)
+	e.POST("/user", post_user)
 }
 
 func root(c echo.Context) error {
@@ -159,11 +162,29 @@ func downTable() {
 	)
 }
 
-func register_user(c echo.Context) (err error) {
+type PostUserMessageSuccess struct {
+	Message string `json:"message"`
+	Status  bool   `json:"status"`
+}
+
+type PostUserMessageFaild struct {
+	Message string `json:"message"`
+	Status  bool   `json:"status"`
+	Error   string `json:"error"`
+}
+
+func post_user(c echo.Context) (err error) {
+	db := sqlConnect()
+	defer db.Close()
+
 	user := new(User)
-	if err = c.Bind(&user); err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	if err = c.Bind(user); err != nil {
+		message := PostUserMessageFaild{"Registration successfull", false, err.Error()}
+		return echo.NewHTTPError(http.StatusBadRequest, message)
 	}
-	fmt.Print(user)
-	return c.JSON(http.StatusOK, user)
+
+	db.Create(&user)
+	message := PostUserMessageSuccess{"Registration successfull", true}
+
+	return c.JSON(http.StatusOK, message)
 }
