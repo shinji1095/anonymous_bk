@@ -16,7 +16,7 @@ import (
 )
 
 type User struct {
-	Id        uint   `json:"id"`
+	Id        uint   `json:"id" gorm:"AUTO_INCREMENT"`
 	Firstname string `json:"firstname"`
 	Lastname  string `json:"lastname"`
 	Email     string `json:"email"`
@@ -29,7 +29,7 @@ type Belong struct {
 }
 
 type Group struct {
-	Id   uint   `json:"id"`
+	Id   uint   `json:"id" gorm:"AUTO_INCREMENT"`
 	Name string `json:"name"`
 }
 
@@ -39,7 +39,7 @@ type Share struct {
 }
 
 type Assignment struct {
-	Id   uint      `json:"id"`
+	Id   uint      `json:"id" gorm:"AUTO_INCREMENT"`
 	Name string    `json:"name"`
 	Due  time.Time `json:"due"`
 }
@@ -65,9 +65,11 @@ func router(e *echo.Echo) {
 	e.GET("/migrate/:command", migrate)
 	e.GET("/do", get_does)
 	e.POST("/user", post_user)
-	e.POST("validate/user", validate_user)
-	e.POST("assignment", post_assignment)
-
+	e.POST("/validate/user", validate_user)
+	e.POST("/assignment", post_assignment)
+	e.POST("/group", post_group)
+	e.POST("/do", post_do)
+	e.POST("/share", post_share)
 }
 
 func root(c echo.Context) error {
@@ -183,7 +185,7 @@ func post_user(c echo.Context) (err error) {
 	defer db.Close()
 
 	user := new(User)
-	if err = c.Bind(user); err != nil {
+	if err = c.Bind(&user); err != nil {
 		message := PostUserMessageFaild{"Registration failed", false, err.Error()}
 		return echo.NewHTTPError(http.StatusBadRequest, message)
 	}
@@ -213,7 +215,7 @@ func validate_user(c echo.Context) (err error) {
 	user := new(User)
 	if err = c.Bind(user); err != nil {
 		message := ValidateUserErrorMessage{"vaiudation failed", false, err.Error()}
-		return echo.NewHTTPError(http.StatusBadRequest, message)
+		return c.JSON(http.StatusBadRequest, message)
 	}
 
 	validate := new(User)
@@ -226,7 +228,7 @@ func validate_user(c echo.Context) (err error) {
 			false,
 			"cannot find any records",
 		}
-		return echo.NewHTTPError(http.StatusBadRequest, message)
+		return c.JSON(http.StatusBadRequest, message)
 	}
 
 	message := ValidateUserSuccessMessage{
@@ -247,6 +249,7 @@ type GetDoSuccessMessage struct {
 type GetDoErrorMessage struct {
 	Message string `json:"message"`
 	Status  bool   `json:"status"`
+	Error   error  `json:"error"`
 }
 
 func get_does(c echo.Context) (err error) {
@@ -254,7 +257,6 @@ func get_does(c echo.Context) (err error) {
 	defer db.Close()
 
 	loc, _ := time.LoadLocation("Asia/Tokyo")
-	fmt.Println(time.Date(2014, 12, 31, 8, 4, 18, 0, loc))
 
 	userID, _ := strconv.Atoi(c.QueryParam("userID"))
 	month, _ := strconv.Atoi(c.QueryParam("month"))
@@ -267,8 +269,8 @@ func get_does(c echo.Context) (err error) {
 	fmt.Print(t2, "\n")
 
 	do := []Do{}
-	if err := db.Select("ranking, updateAt").Where("userID = ? AND status = ? AND updateAt >= ? AND updateAt < ?", userID, 2, t1, t2).Find(&do); err.Error != nil {
-		return c.JSON(http.StatusBadRequest, GetDoErrorMessage{"Can't find records", false})
+	if err := db.Select("assignment_id, ranking, update_at").Where("user_ id= ? AND status = ? AND update_at >= ? AND update_at < ?", userID, 2, t1, t2).Find(&do); err.Error != nil {
+		return c.JSON(http.StatusBadRequest, GetDoErrorMessage{"Can't find records", false, err.Error})
 	}
 
 	message := GetDoSuccessMessage{
@@ -298,11 +300,64 @@ func post_assignment(c echo.Context) error {
 	assignment := new(Assignment)
 	if err := c.Bind(&assignment); err != nil {
 		message := PostAssignmentErrorMessage{"Creation failed", false, err.Error()}
-		return echo.NewHTTPError(http.StatusBadRequest, message)
+		return c.JSON(http.StatusBadRequest, message)
 	}
 
 	db.Create(&assignment)
 	message := PostAssignmentSuccessMessage{"Assignment successfully create", true}
 
+	return c.JSON(http.StatusOK, message)
+}
+
+func post_group(c echo.Context) error {
+	db := sqlConnect()
+	defer db.Close()
+
+	group := new(Group)
+	if err := c.Bind(&group); err != nil {
+		message := PostAssignmentErrorMessage{"Creation failed", false, err.Error()}
+		return c.JSON(http.StatusBadRequest, message)
+	}
+
+	db.Create(&group)
+	message := PostAssignmentSuccessMessage{"Group successfully create", true}
+
+	return c.JSON(http.StatusOK, message)
+}
+
+type ErrorMessage struct {
+	Message string `json:"message"`
+	Status  bool   `json:"status"`
+	Error   string `json:"error"`
+}
+
+type SuccessMessage struct {
+	Message string `json:"message"`
+	Status  bool   `json:"status"`
+}
+
+func post_do(c echo.Context) error {
+	db := sqlConnect()
+	defer db.Close()
+
+	do := new(Do)
+	if err := c.Bind(do); err != nil {
+		return c.JSON(http.StatusBadRequest, ErrorMessage{"Creation failed", false, err.Error()})
+	}
+	db.Create(&do)
+	message := SuccessMessage{"Creation successfully done", true}
+	return c.JSON(http.StatusOK, message)
+}
+
+func post_share(c echo.Context) error {
+	db := sqlConnect()
+	defer db.Close()
+
+	share := new(Share)
+	if err := c.Bind(share); err != nil {
+		return c.JSON(http.StatusBadRequest, ErrorMessage{"Creation failed", false, err.Error()})
+	}
+	db.Create(&share)
+	message := SuccessMessage{"Creation successfully done", true}
 	return c.JSON(http.StatusOK, message)
 }
