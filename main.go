@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/jinzhu/gorm"
@@ -62,8 +63,10 @@ func main() {
 func router(e *echo.Echo) {
 	e.GET("/", root)
 	e.GET("/migrate/:command", migrate)
+	e.GET("/do", get_does)
 	e.POST("/user", post_user)
 	e.POST("validate/user", validate_user)
+
 }
 
 func root(c echo.Context) error {
@@ -229,6 +232,48 @@ func validate_user(c echo.Context) (err error) {
 		"Validation successfull",
 		true,
 		*validate,
+	}
+
+	return c.JSON(http.StatusOK, message)
+}
+
+type GetDoSuccessMessage struct {
+	Message string `json:"message"`
+	Status  bool   `json:"status"`
+	Data    []Do   `json:"data"`
+}
+
+type GetDoErrorMessage struct {
+	Message string `json:"message"`
+	Status  bool   `json:"status"`
+}
+
+func get_does(c echo.Context) (err error) {
+	db := sqlConnect()
+	defer db.Close()
+
+	loc, _ := time.LoadLocation("Asia/Tokyo")
+	fmt.Println(time.Date(2014, 12, 31, 8, 4, 18, 0, loc))
+
+	userID, _ := strconv.Atoi(c.QueryParam("userID"))
+	month, _ := strconv.Atoi(c.QueryParam("month"))
+	year, _ := strconv.Atoi(c.QueryParam("year"))
+
+	// t1 月初め、　t2 月終わり
+	t1 := time.Date(year, time.Month(month), 1, 0, 0, 0, 0, loc)
+	t2 := t1.AddDate(0, 1, -1)
+	fmt.Print(t1, "\n")
+	fmt.Print(t2, "\n")
+
+	do := []Do{}
+	if err := db.Select("ranking, updateAt").Where("userID = ? AND status = ? AND updateAt >= ? AND updateAt < ?", userID, 2, t1, t2).Find(&do); err.Error != nil {
+		return c.JSON(http.StatusBadRequest, GetDoErrorMessage{"Can't find records", false})
+	}
+
+	message := GetDoSuccessMessage{
+		"Record successfully get",
+		true,
+		do,
 	}
 
 	return c.JSON(http.StatusOK, message)
