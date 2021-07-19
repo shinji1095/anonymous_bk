@@ -66,6 +66,7 @@ func router(e *echo.Echo) {
 	e.GET("/do", get_does)
 	e.POST("/user", post_user)
 	e.POST("validate/user", validate_user)
+	e.POST("assignment", post_assignment)
 
 }
 
@@ -275,6 +276,33 @@ func get_does(c echo.Context) (err error) {
 		true,
 		do,
 	}
+
+	return c.JSON(http.StatusOK, message)
+}
+
+type PostAssignmentErrorMessage struct {
+	Message string `json:"message"`
+	Status  bool   `json:"status"`
+	Error   string `json:"error"`
+}
+
+type PostAssignmentSuccessMessage struct {
+	Message string `json:"message"`
+	Status  bool   `json:"status"`
+}
+
+func post_assignment(c echo.Context) error {
+	db := sqlConnect()
+	defer db.Close()
+
+	assignment := new(Assignment)
+	if err := c.Bind(&assignment); err != nil {
+		message := PostAssignmentErrorMessage{"Creation failed", false, err.Error()}
+		return echo.NewHTTPError(http.StatusBadRequest, message)
+	}
+
+	db.Create(&assignment)
+	message := PostAssignmentSuccessMessage{"Assignment successfully create", true}
 
 	return c.JSON(http.StatusOK, message)
 }
