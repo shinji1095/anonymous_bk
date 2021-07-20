@@ -87,3 +87,6 @@ test-do-reg:
 test-do-get:
 	curl -X GET http://localhost:8080/do?userID=1\&year=2021\&month=7 
 
+test-do-get-spec:
+	curl -X GET http://localhost:8080/do/userID/1
+

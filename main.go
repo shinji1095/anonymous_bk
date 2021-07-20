@@ -63,7 +63,8 @@ func main() {
 func router(e *echo.Echo) {
 	e.GET("/", root)
 	e.GET("/migrate/:command", migrate)
-	e.GET("/do", get_does)
+	e.GET("/do", get_dos)
+	e.GET("/do/userID/:userID", get_do_spec)
 	e.POST("/user", post_user)
 	e.POST("/validate/user", validate_user)
 	e.POST("/assignment", post_assignment)
@@ -252,7 +253,7 @@ type GetDoErrorMessage struct {
 	Error   error  `json:"error"`
 }
 
-func get_does(c echo.Context) (err error) {
+func get_dos(c echo.Context) (err error) {
 	db := sqlConnect()
 	defer db.Close()
 
@@ -359,5 +360,23 @@ func post_share(c echo.Context) error {
 	}
 	db.Create(&share)
 	message := SuccessMessage{"Creation successfully done", true}
+	return c.JSON(http.StatusOK, message)
+}
+
+func get_do_spec(c echo.Context) error {
+	db := sqlConnect()
+	defer db.Close()
+
+	dos := []Do{}
+
+	userID := c.Param("userID")
+	if err := db.Find(&dos, "user_id = ?", userID); err.Error != nil {
+		message := GetDoErrorMessage{"Cant't find record", false, err.Error}
+		return c.JSON(http.StatusOK, message)
+	}
+	message := GetDoSuccessMessage{
+		"Record successfully get",
+		true,
+		dos}
 	return c.JSON(http.StatusOK, message)
 }
