@@ -275,7 +275,7 @@ func get_dos(c echo.Context) (err error) {
 	fmt.Print(t2, "\n")
 
 	do := []Do{}
-	if err := db.Select("assignment_id, ranking, update_at").Where("user_ id= ? AND status = ? AND update_at >= ? AND update_at < ?", userID, 2, t1, t2).Find(&do); err.Error != nil {
+	if err := db.Where("user_id= ? AND status = ? AND update_at >= ? AND update_at < ?", userID, 2, t1, t2).Find(&do); err.Error != nil {
 		return c.JSON(http.StatusOK, GetDoErrorMessage{"Can't find records", false, err.Error})
 	}
 
