@@ -90,3 +90,6 @@ test-do-get:
 test-do-get-spec:
 	curl -X GET http://localhost:8080/do/userID/1
 
+test-do-week:
+	curl -X GET http://localhost:8080/do/week
+
