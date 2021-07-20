@@ -75,6 +75,7 @@ func router(e *echo.Echo) {
 	e.POST("/group", post_group)
 	e.POST("/do", post_do)
 	e.POST("/share", post_share)
+	e.PUT("/do", put_do)
 }
 
 func root(c echo.Context) error {
@@ -275,7 +276,7 @@ func get_dos(c echo.Context) (err error) {
 
 	do := []Do{}
 	if err := db.Select("assignment_id, ranking, update_at").Where("user_ id= ? AND status = ? AND update_at >= ? AND update_at < ?", userID, 2, t1, t2).Find(&do); err.Error != nil {
-		return c.JSON(http.StatusBadRequest, GetDoErrorMessage{"Can't find records", false, err.Error})
+		return c.JSON(http.StatusOK, GetDoErrorMessage{"Can't find records", false, err.Error})
 	}
 
 	message := GetDoSuccessMessage{
@@ -431,5 +432,26 @@ func get_ass(c echo.Context) error {
 		true,
 		assignments,
 	}
+	return c.JSON(http.StatusOK, message)
+}
+
+func put_do(c echo.Context) error {
+	db := sqlConnect()
+	defer db.Close()
+
+	userID := c.Param("userID")
+	assignmentID := c.Param("assignmentID")
+	status, _ := strconv.Atoi(c.Param("status"))
+
+	do := new(Do)
+	if err := db.Where("user_id = ? AND assignment_id = ?", userID, assignmentID).Find(&do); err.Error != nil {
+		message := GetDoErrorMessage{"Cant find record", false, err.Error}
+		return c.JSON(http.StatusOK, message)
+	}
+
+	do.Status = uint(status)
+	db.Save(&do)
+
+	message := SuccessMessage{"Putting do success", true}
 	return c.JSON(http.StatusOK, message)
 }
