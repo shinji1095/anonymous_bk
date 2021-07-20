@@ -22,6 +22,39 @@ migrate-refresh:
 	@make migrate-rollback
 	@make migrate
 
+seed-all:
+	@make seed-do-single
+	@make seed-ass
+	@make seed-group
+
+seed-group:
+	@make test-group-reg
+
+seed-ass:
+	curl -X POST http://localhost:8080/assignment \
+	-H 'Content-Type: application/json' \
+  	-d '{"name":"math", "due":"monday","groupID":1}'
+
+	curl -X POST http://localhost:8080/assignment \
+	-H 'Content-Type: application/json' \
+  	-d '{"name":"english", "due":"tuesday","groupID":1}'
+
+	curl -X POST http://localhost:8080/assignment \
+	-H 'Content-Type: application/json' \
+  	-d '{"name":"statistics", "due":"friday","groupID":1}'
+
+	curl -X POST http://localhost:8080/assignment \
+	-H 'Content-Type: application/json' \
+  	-d '{"name":"japanese", "due":"monday","groupID":2}'
+
+	curl -X POST http://localhost:8080/assignment \
+	-H 'Content-Type: application/json' \
+  	-d '{"name":"math2", "due":"tuesday","groupID":2}'
+
+	curl -X POST http://localhost:8080/assignment \
+	-H 'Content-Type: application/json' \
+  	-d '{"name":"statistics", "due":"friday","groupID":2}'
+
 seed-do-single:
 	curl -X POST http://localhost:8080/do \
 	-H 'Content-Type: application/json' \
@@ -50,7 +83,7 @@ seed-do-single:
 	
 seed-refresh:
 	@make migrate-refresh
-	@make seed-do-single
+	@make seed-all
 
 
 test-user-reg:
@@ -92,4 +125,9 @@ test-do-get-spec:
 
 test-do-week:
 	curl -X GET http://localhost:8080/do/week
+
+groupID=1
+test-ass:
+	@make test-group-reg
+	curl -X GET http://localhost:8080/assignment/$(groupID)
 

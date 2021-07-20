@@ -29,8 +29,9 @@ type Belong struct {
 }
 
 type Group struct {
-	Id   uint   `json:"id" gorm:"AUTO_INCREMENT"`
-	Name string `json:"name"`
+	Id         uint   `json:"id"`
+	Name       string `json:"name"`
+	Assignment []Assignment
 }
 
 type Share struct {
@@ -39,9 +40,10 @@ type Share struct {
 }
 
 type Assignment struct {
-	Id   uint      `json:"id" gorm:"AUTO_INCREMENT"`
-	Name string    `json:"name"`
-	Due  time.Time `json:"due"`
+	Id      uint   `json:"id" gorm:"AUTO_INCREMENT"`
+	Name    string `json:"name"`
+	Due     string `json:"due"`
+	GroupID int    `json:"groupID"`
 }
 
 type Do struct {
@@ -66,6 +68,7 @@ func router(e *echo.Echo) {
 	e.GET("/do", get_dos)
 	e.GET("/do/userID/:userID", get_do_spec)
 	e.GET("/do/week", get_do_week)
+	e.GET("/assignment/:groupID", get_ass)
 	e.POST("/user", post_user)
 	e.POST("/validate/user", validate_user)
 	e.POST("/assignment", post_assignment)
@@ -401,5 +404,32 @@ func get_do_week(c echo.Context) error {
 		"Record successfully get",
 		true,
 		dos}
+	return c.JSON(http.StatusOK, message)
+}
+
+type GetAssMeSuccessMessage struct {
+	Message string       `json:"message"`
+	Status  bool         `json:"status"`
+	Data    []Assignment `json:"data"`
+}
+
+func get_ass(c echo.Context) error {
+	db := sqlConnect()
+	defer db.Close()
+
+	groupID := c.Param("groupID")
+
+	//group := new(Group)
+	assignments := []Assignment{}
+	if err := db.Where("group_id = ?", groupID).Find(&assignments); err.Error != nil {
+		message := GetDoErrorMessage{"Cant any record", false, err.Error}
+		return c.JSON(http.StatusOK, message)
+	}
+
+	message := GetAssMeSuccessMessage{
+		"ok",
+		true,
+		assignments,
+	}
 	return c.JSON(http.StatusOK, message)
 }
