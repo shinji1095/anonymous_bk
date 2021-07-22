@@ -32,8 +32,9 @@ type Belong struct {
 }
 
 type Group struct {
-	Id   uint   `json:"id"`
-	Name string `json:"name"`
+	Id    uint   `json:"id"`
+	Name  string `json:"name"`
+	Users []User `json:"users"`
 }
 
 type Share struct {
@@ -66,7 +67,7 @@ func main() {
 	case "production":
 		port = os.Getenv("PORT")
 	default:
-		port = "1323"
+		port = "8080"
 	}
 	e.Logger.Fatal(e.Start(":" + port))
 }
@@ -78,6 +79,7 @@ func router(e *echo.Echo) {
 	e.GET("/do", get_dos)
 	e.GET("/do/userID/:userID", get_do_spec)
 	e.GET("/do/week", get_do_week)
+	e.GET("/group/:groupID", get_group)
 	e.GET("/assignment/:groupID", get_ass)
 	e.POST("/user", post_user)
 	e.POST("/validate/user", validate_user)
@@ -85,6 +87,7 @@ func router(e *echo.Echo) {
 	e.POST("/group", post_group)
 	e.POST("/do", post_do)
 	e.POST("/share", post_share)
+	e.PUT("/belong/group/:groupID", belong_group)
 	e.PUT("/do", put_do)
 }
 
@@ -490,5 +493,50 @@ func put_do(c echo.Context) error {
 	db.Save(&do)
 
 	message := SuccessMessage{"Putting do success", true}
+	return c.JSON(http.StatusOK, message)
+}
+
+func belong_group(c echo.Context) error {
+	db := sqlConnect()
+	defer db.Close()
+
+	groupID, _ := strconv.Atoi(c.Param("groupID"))
+	userID := c.QueryParam("userID")
+	fmt.Print("groupID:", groupID)
+	fmt.Print("\nuserID: ", userID)
+
+	user := new(User)
+
+	if err := db.Find(&user, "id=?", userID); err.Error != nil {
+		message := GetDoErrorMessage{"Cannot find user record", false, err.Error}
+		return c.JSON(http.StatusOK, message)
+	}
+
+	user.GroupID = uint(groupID)
+	db.Save(&user)
+
+	message := SuccessMessage{"Record updated", true}
+	return c.JSON(http.StatusOK, message)
+}
+
+type GetGroupSuccessMessage struct {
+	Message string `json:"message"`
+	Status  bool   `json:"status"`
+	Data    Group  `json:"data"`
+}
+
+func get_group(c echo.Context) error {
+	db := sqlConnect()
+	defer db.Close()
+
+	groupID := c.Param("groupID")
+	group := new(Group)
+	if err := db.Find(&group, "id=?", groupID); err.Error != nil {
+		message := GetDoErrorMessage{"Cannot find group record", false, err.Error}
+		return c.JSON(http.StatusOK, message)
+	}
+	db.Model(&group).Related(&group.Users)
+
+	message := GetGroupSuccessMessage{"Record updated", true, *group}
 	return c.JSON(http.StatusOK, message)
 }

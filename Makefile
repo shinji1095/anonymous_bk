@@ -1,4 +1,7 @@
 db_container = anonymous_bk_db_1
+env = dev
+pro_url = https://anonymous-bk.herokuapp.com/
+dev_url = http://localhost:8080/
 
 up:
 	docker-compose up -d
@@ -23,7 +26,7 @@ migrate-refresh:
 	@make migrate
 
 seed-all:
-	@make seed-user
+	@make seed-user-all
 	@make seed-do-single
 	@make seed-ass
 	@make seed-group
@@ -33,8 +36,28 @@ seed-user:
 	-H 'Content-Type: application/json' \
   	-d '{"firstname":"eto","lastname":"shinji", "password":"ppp", "email":"aaa@mail.com", "groupID":1}'
 
+seed-user-all:
+	@make seed-user
+	curl -X POST http://localhost:8080/user \
+	-H 'Content-Type: application/json' \
+  	-d '{"firstname":"yoshida","lastname":"takanori", "password":"ppp", "email":"bbb@mail.com", "groupID":1}'
+
+	curl -X POST http://localhost:8080/user \
+	-H 'Content-Type: application/json' \
+  	-d '{"firstname":"tanaka","lastname":"ryouya", "password":"ppp", "email":"ccc@mail.com", "groupID":1}'
+
+	curl -X POST http://localhost:8080/user \
+	-H 'Content-Type: application/json' \
+  	-d '{"firstname":"hosida","lastname":"kyousuke", "password":"ppp", "email":"ddd@mail.com", "groupID":1}'
+
+	curl -X POST http://localhost:8080/user \
+	-H 'Content-Type: application/json' \
+  	-d '{"firstname":"ogata","lastname":"miduho", "password":"ppp", "email":"eee@mail.com", "groupID":1}'
+
 seed-group:
-	@make test-group-reg
+	curl -X POST http://localhost:8080/group \
+	-H 'Content-Type: application/json' \
+  	-d '{"name":"hibikino"}'
 
 seed-ass:
 	curl -X POST http://localhost:8080/assignment \
@@ -141,6 +164,23 @@ status=1
 test-do-put:
 	curl -X PUT http://localhost:8080/do?userID=1\&assignmentID=1\&status=$(status)
 
-userID=1
+userID=2
 test-user-get:
 	curl -X GET http://localhost:8080/user/$(userID)
+
+groupID=1
+test-group-get:
+	curl -X GET http://localhost:8080/group/$(groupID)
+
+test-belong:
+	curl -X PUT http://localhost:8080/belong/group/$(groupID)?userID=$(userID)
+
+test-belong-all:
+	@make migrate-refresh
+	@make seed-user-all
+	@make seed-group
+	@make test-belong groupID=1 userID=1
+	@make test-belong groupID=1 userID=2
+	@make test-belong groupID=1 userID=3
+	@make test-belong groupID=1 userID=4
+	@make test-belong groupID=1 userID=5
