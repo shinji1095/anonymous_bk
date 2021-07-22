@@ -96,8 +96,11 @@ func sqlConnect() (database *gorm.DB) {
 
 	switch env {
 	case "production":
-		log.Print("access as production")
+		log.Print("access as production\n")
+		DBMS = "postgres"
 		URL = os.Getenv("DATABASE_URL")
+		URL += "?sslmode=require"
+		log.Print("acceccing ", URL)
 	default:
 		log.Print("access as development")
 		DBMS = "mysql"
