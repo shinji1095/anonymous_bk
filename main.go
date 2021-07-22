@@ -21,6 +21,8 @@ type User struct {
 	Lastname  string `json:"lastname"`
 	Email     string `json:"email"`
 	Password  string `json:"password"`
+	GroupID   uint   `json:"groupID"`
+	Group     Group
 }
 
 type Belong struct {
@@ -29,9 +31,8 @@ type Belong struct {
 }
 
 type Group struct {
-	Id         uint   `json:"id"`
-	Name       string `json:"name"`
-	Assignment []Assignment
+	Id   uint   `json:"id"`
+	Name string `json:"name"`
 }
 
 type Share struct {
@@ -64,6 +65,7 @@ func main() {
 
 func router(e *echo.Echo) {
 	e.GET("/", root)
+	e.GET("/user/:userID", get_user)
 	e.GET("/migrate/:command", migrate)
 	e.GET("/do", get_dos)
 	e.GET("/do/userID/:userID", get_do_spec)
@@ -186,6 +188,21 @@ type PostUserMessageFaild struct {
 	Error   string `json:"error"`
 }
 
+func get_user(c echo.Context) error {
+	db := sqlConnect()
+	defer db.Close()
+
+	userID := c.Param("userID")
+	user := new(User)
+	if err := db.Find(&user, "id=?", userID); err.Error != nil {
+		message := GetDoErrorMessage{"Invalid query param", false, err.Error}
+		return c.JSON(http.StatusOK, message)
+	}
+
+	message := ValidateUserSuccessMessage{"Find user", true, *user}
+	return c.JSON(http.StatusOK, message)
+}
+
 func post_user(c echo.Context) (err error) {
 	db := sqlConnect()
 	defer db.Close()
@@ -225,17 +242,17 @@ func validate_user(c echo.Context) (err error) {
 	}
 
 	validate := new(User)
-	fmt.Print(user.Email)
-	fmt.Print(user.Password)
 
 	if err := db.Where("email = ? AND password = ?", user.Email, user.Password).First(&validate); err.Error != nil {
 		message := ValidateUserErrorMessage{
 			"validation failed",
 			false,
-			"cannot find any records",
+			"cannot find records",
 		}
-		return c.JSON(http.StatusBadRequest, message)
+		return c.JSON(http.StatusOK, message)
 	}
+	fmt.Print(validate.Group.Id)
+	db.Model(&validate).Related(&validate.Group.Id)
 
 	message := ValidateUserSuccessMessage{
 		"Validation successfull",
@@ -306,13 +323,19 @@ func post_assignment(c echo.Context) error {
 	assignment := new(Assignment)
 	if err := c.Bind(&assignment); err != nil {
 		message := PostAssignmentErrorMessage{"Creation failed", false, err.Error()}
-		return c.JSON(http.StatusBadRequest, message)
+		return c.JSON(http.StatusOK, message)
 	}
 
 	db.Create(&assignment)
 	message := PostAssignmentSuccessMessage{"Assignment successfully create", true}
 
 	return c.JSON(http.StatusOK, message)
+}
+
+type PostGroupSuccessMessage struct {
+	Message string `json:"message"`
+	Status  bool   `json:"status"`
+	Data    Group  `json:"data"`
 }
 
 func post_group(c echo.Context) error {
@@ -326,7 +349,7 @@ func post_group(c echo.Context) error {
 	}
 
 	db.Create(&group)
-	message := PostAssignmentSuccessMessage{"Group successfully create", true}
+	message := PostGroupSuccessMessage{"Group successfully create", true, *group}
 
 	return c.JSON(http.StatusOK, message)
 }
@@ -439,16 +462,19 @@ func put_do(c echo.Context) error {
 	db := sqlConnect()
 	defer db.Close()
 
-	userID := c.Param("userID")
-	assignmentID := c.Param("assignmentID")
-	status, _ := strconv.Atoi(c.Param("status"))
+	userID, _ := strconv.Atoi(c.QueryParam("userID"))
+	assignmentID, _ := strconv.Atoi(c.QueryParam("assignmentID"))
+	status, _ := strconv.Atoi(c.QueryParam("status"))
+	fmt.Print("userID: ", userID)
+	fmt.Print("\nassID: ", assignmentID)
+	fmt.Print(status)
 
 	do := new(Do)
-	if err := db.Where("user_id = ? AND assignment_id = ?", userID, assignmentID).Find(&do); err.Error != nil {
+	if err := db.Where("user_id = ? AND assignment_id = ?", userID, assignmentID).First(&do); err.Error != nil {
 		message := GetDoErrorMessage{"Cant find record", false, err.Error}
 		return c.JSON(http.StatusOK, message)
 	}
-
+	fmt.Print("\ndo: ", do)
 	do.Status = uint(status)
 	db.Save(&do)
 

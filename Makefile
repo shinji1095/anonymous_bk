@@ -1,4 +1,4 @@
-db_container = anonymous_db_1
+db_container = anonymous_bk_db_1
 
 up:
 	docker-compose up -d
@@ -23,9 +23,15 @@ migrate-refresh:
 	@make migrate
 
 seed-all:
+	@make seed-user
 	@make seed-do-single
 	@make seed-ass
 	@make seed-group
+
+seed-user:
+	curl -X POST http://localhost:8080/user \
+	-H 'Content-Type: application/json' \
+  	-d '{"firstname":"eto","lastname":"shinji", "password":"ppp", "email":"aaa@mail.com", "groupID":1}'
 
 seed-group:
 	@make test-group-reg
@@ -89,7 +95,7 @@ seed-refresh:
 test-user-reg:
 	curl -X POST http://localhost:8080/user \
 	-H 'Content-Type: application/json' \
-  	-d '{"firstname":"eto","lastname":"shinji", "password":"ppp", "email":"joe@invalid-domain"}'
+  	-d '{"firstname":"eto","lastname":"shinji", "password":"ppp", "email":"joe@invalid-domain", "groupID":1}'
 
 pass=ppp
 test-user-val:
@@ -100,7 +106,7 @@ test-user-val:
 test-ass-reg:
 	curl -X POST http://localhost:8080/assignment \
 	-H 'Content-Type: application/json' \
-  	-d '{"name":"math", "due":"2021-07-23T17:00:00+09:00"}'
+  	-d '{"name":"math", "due":"monday"}'
 
 test-group-reg:
 	curl -X POST http://localhost:8080/group \
@@ -131,5 +137,10 @@ test-ass:
 	@make test-group-reg
 	curl -X GET http://localhost:8080/assignment/$(groupID)
 
+status=1
 test-do-put:
-	curl -X PUT http://localhost:8080/do?userID=1\&assignmentID=2\&status=1 
+	curl -X PUT http://localhost:8080/do?userID=1\&assignmentID=1\&status=$(status)
+
+userID=1
+test-user-get:
+	curl -X GET http://localhost:8080/user/$(userID)
