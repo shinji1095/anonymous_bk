@@ -61,7 +61,14 @@ func main() {
 	defer db.Close()
 	e := echo.New()
 	router(e)
-	e.Logger.Fatal(e.Start(":8080"))
+	var port string
+	switch env := os.Getenv("env"); env {
+	case "production":
+		port = os.Getenv("PORT")
+	default:
+		port = "1323"
+	}
+	e.Logger.Fatal(e.Start(":" + port))
 }
 
 func router(e *echo.Echo) {
