@@ -78,7 +78,7 @@ func router(e *echo.Echo) {
 	e.GET("/migrate/:command", migrate)
 	e.GET("/do", get_dos)
 	e.GET("/do/userID/:userID", get_do_spec)
-	e.GET("/do/week", get_do_week)
+	e.GET("/do/week/:userID", get_do_week)
 	e.GET("/group/:groupID", get_group)
 	e.GET("/assignment/:groupID", get_ass)
 	e.POST("/user", post_user)
@@ -427,13 +427,15 @@ func get_do_week(c echo.Context) error {
 	db := sqlConnect()
 	defer db.Close()
 
+	userID := c.Param("userID")
+
 	loc, _ := time.LoadLocation("Asia/Tokyo")
 	now := time.Now()
 	t1 := time.Date(now.Year(), now.Month(), 0, 0, 0, 0, 0, loc)
 	t2 := t1.AddDate(0, 0, -7)
 
 	dos := []Do{}
-	if err := db.Where("update_at >= ?", t2).Find(&dos); err.Error != nil {
+	if err := db.Where("update_at >= ? AND user_id = ?", t2, userID).Find(&dos); err.Error != nil {
 		message := GetDoErrorMessage{"Cant't find record", false, err.Error}
 		return c.JSON(http.StatusOK, message)
 	}

@@ -84,31 +84,30 @@ seed-ass:
 	-H 'Content-Type: application/json' \
   	-d '{"name":"statistics", "due":"friday","groupID":2}'
 
-seed-do-single:
+seed-do:
 	curl -X POST http://localhost:8080/do \
 	-H 'Content-Type: application/json' \
-  	-d '{"userID":1,"assignmentID":1, "status":2, "ranking":1, "updateAt":"2021-07-02T17:00:00+09:00"}'	
+  	-d '{"userID":$(userID),"assignmentID":1, "status":2, "ranking":1, "updateAt":"2021-07-02T17:00:00+09:00"}'	
 
 	curl -X POST http://localhost:8080/do \
 	-H 'Content-Type: application/json' \
-  	-d '{"userID":1,"assignmentID":2, "status":2, "ranking":2, "updateAt":"2021-07-09T17:00:00+09:00"}'	
+  	-d '{"userID":$(userID),"assignmentID":2, "status":$(status), "ranking":2, "updateAt":"2021-07-09T17:00:00+09:00"}'	
 
 	curl -X POST http://localhost:8080/do \
 	-H 'Content-Type: application/json' \
-  	-d '{"userID":1,"assignmentID":3, "status":2, "ranking":3, "updateAt":"2021-07-10T17:00:00+09:00"}'	
+  	-d '{"userID":$(userID),"assignmentID":3, "status":0, "ranking":3, "updateAt":"2021-07-10T17:00:00+09:00"}'	
 	
 	curl -X POST http://localhost:8080/do \
 	-H 'Content-Type: application/json' \
-  	-d '{"userID":1,"assignmentID":1, "status":2, "ranking":1, "updateAt":"2021-07-12T17:00:00+09:00"}'	
+  	-d '{"userID":$(userID),"assignmentID":1, "status":$(status), "ranking":1, "updateAt":"2021-07-12T17:00:00+09:00"}'	
 
 	curl -X POST http://localhost:8080/do \
 	-H 'Content-Type: application/json' \
-  	-d '{"userID":1,"assignmentID":2, "status":2, "ranking":4, "updateAt":"2021-07-17T17:00:00+09:00"}'
+  	-d '{"userID":$(userID),"assignmentID":2, "status":1, "ranking":4, "updateAt":"2021-07-17T17:00:00+09:00"}'
 
 	curl -X POST http://localhost:8080/do \
 	-H 'Content-Type: application/json' \
-  	-d '{"userID":1,"assignmentID":3, "status":2, "ranking":1, "updateAt":"2021-07-20T17:00:00+09:00"}'		
-
+  	-d '{"userID":$(userID),"assignmentID":3, "status":$(status), "ranking":1, "updateAt":"2021-07-20T17:00:00+09:00"}'	
 	
 seed-refresh:
 	@make migrate-refresh
@@ -153,7 +152,7 @@ test-do-get-spec:
 	curl -X GET http://localhost:8080/do/userID/1
 
 test-do-week:
-	curl -X GET http://localhost:8080/do/week
+	curl -X GET http://localhost:8080/do/week/$(userID)
 
 groupID=1
 test-ass:
