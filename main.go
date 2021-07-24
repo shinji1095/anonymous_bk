@@ -79,6 +79,7 @@ func router(e *echo.Echo) {
 	e.GET("/do", get_dos)
 	e.GET("/do/userID/:userID", get_do_spec)
 	e.GET("/do/week/:userID", get_do_week)
+	e.GET("/group", get_group_all)
 	e.GET("/group/:groupID", get_group)
 	e.GET("/assignment/:groupID", get_ass)
 	e.POST("/user", post_user)
@@ -89,6 +90,7 @@ func router(e *echo.Echo) {
 	e.POST("/share", post_share)
 	e.PUT("/belong/group/:groupID", belong_group)
 	e.PUT("/do", put_do)
+	e.PUT("/user/:userID", put_user)
 }
 
 func root(c echo.Context) error {
@@ -228,7 +230,7 @@ func post_user(c echo.Context) (err error) {
 	}
 
 	db.Create(&user)
-	message := PostUserMessageSuccess{"Registration successfull", true}
+	message := ValidateUserSuccessMessage{"Registration successfull", true, *user}
 
 	return c.JSON(http.StatusOK, message)
 }
@@ -527,6 +529,27 @@ type GetGroupSuccessMessage struct {
 	Data    Group  `json:"data"`
 }
 
+type GetGroupsSuccessMessage struct {
+	Message string  `json:"message"`
+	Status  bool    `json:"status"`
+	Data    []Group `json:"data"`
+}
+
+func get_group_all(c echo.Context) error {
+	db := sqlConnect()
+	defer db.Close()
+
+	groups := []Group{}
+	if err := db.Find(&groups); err.Error != nil {
+		message := GetDoErrorMessage{"Cannot find record", false, err.Error}
+		return c.JSON(http.StatusOK, message)
+	}
+	for i := range groups {
+		db.Model(&groups[i]).Related(&groups[i].Users, "Users")
+	}
+	return c.JSON(http.StatusOK, GetGroupsSuccessMessage{"Success", true, groups})
+}
+
 func get_group(c echo.Context) error {
 	db := sqlConnect()
 	defer db.Close()
@@ -540,5 +563,23 @@ func get_group(c echo.Context) error {
 	db.Model(&group).Related(&group.Users)
 
 	message := GetGroupSuccessMessage{"Record updated", true, *group}
+	return c.JSON(http.StatusOK, message)
+}
+
+func put_user(c echo.Context) error {
+	db := sqlConnect()
+	defer db.Close()
+
+	userID, _ := strconv.Atoi(c.Param("userID"))
+	groupID, _ := strconv.Atoi(c.QueryParam("groupID"))
+	user := new(User)
+	if err := db.Find(&user, "id=?", userID); err.Error != nil {
+		message := GetDoErrorMessage{"Cant find record", false, err.Error}
+		return c.JSON(http.StatusOK, message)
+	}
+	user.GroupID = uint(groupID)
+	db.Save(&user)
+
+	message := SuccessMessage{"Putting do success", true}
 	return c.JSON(http.StatusOK, message)
 }

@@ -27,7 +27,7 @@ migrate-refresh:
 
 seed-all:
 	@make seed-user-all
-	@make seed-do-single
+	@make seed-do
 	@make seed-ass
 	@make seed-group
 
@@ -95,7 +95,7 @@ seed-do:
 
 	curl -X POST http://localhost:8080/do \
 	-H 'Content-Type: application/json' \
-  	-d '{"userID":$(userID),"assignmentID":3, "status":0, "ranking":3, "updateAt":"2021-07-10T17:00:00+09:00"}'	
+  	-d '{"userID":$(userID),"assignmentID":3, "status":2, "ranking":3, "updateAt":"2021-07-10T17:00:00+09:00"}'	
 	
 	curl -X POST http://localhost:8080/do \
 	-H 'Content-Type: application/json' \
@@ -103,11 +103,19 @@ seed-do:
 
 	curl -X POST http://localhost:8080/do \
 	-H 'Content-Type: application/json' \
-  	-d '{"userID":$(userID),"assignmentID":2, "status":1, "ranking":4, "updateAt":"2021-07-17T17:00:00+09:00"}'
+  	-d '{"userID":$(userID),"assignmentID":2, "status":2, "ranking":4, "updateAt":"2021-07-17T17:00:00+09:00"}'
 
 	curl -X POST http://localhost:8080/do \
 	-H 'Content-Type: application/json' \
   	-d '{"userID":$(userID),"assignmentID":3, "status":$(status), "ranking":1, "updateAt":"2021-07-20T17:00:00+09:00"}'	
+
+seed-do-all:
+	@make seed-do userID=1 status=0
+	@make seed-do userID=2 status=1
+	@make seed-do userID=3 status=2
+	@make seed-do userID=4 status=2
+	@make seed-do userID=5 status=0
+
 	
 seed-refresh:
 	@make migrate-refresh
@@ -163,6 +171,9 @@ status=1
 test-do-put:
 	curl -X PUT http://localhost:8080/do?userID=1\&assignmentID=1\&status=$(status)
 
+test-user-put:
+	curl -X PUT http://localhost:8080/user/$(userID)?groupID=$(groupID)
+
 userID=2
 test-user-get:
 	curl -X GET http://localhost:8080/user/$(userID)
@@ -170,6 +181,9 @@ test-user-get:
 groupID=1
 test-group-get:
 	curl -X GET http://localhost:8080/group/$(groupID)
+
+test-group-get-all:
+	curl -X GET http://localhost:8080/group
 
 test-belong:
 	curl -X PUT http://localhost:8080/belong/group/$(groupID)?userID=$(userID)
