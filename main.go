@@ -268,7 +268,9 @@ func validate_user(c echo.Context) (err error) {
 		return c.JSON(http.StatusOK, message)
 	}
 	fmt.Print(validate.Group.Id)
-	db.Model(&validate).Related(&validate.Group.Id)
+	if validate.Group.Id != 0 {
+		db.Model(&validate).Related(&validate.Group.Id)
+	}
 
 	message := ValidateUserSuccessMessage{
 		"Validation successfull",

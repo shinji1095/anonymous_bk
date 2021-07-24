@@ -27,7 +27,7 @@ migrate-refresh:
 
 seed-all:
 	@make seed-user-all
-	@make seed-do
+	@make seed-do-all
 	@make seed-ass
 	@make seed-group
 
@@ -110,7 +110,29 @@ seed-do:
   	-d '{"userID":$(userID),"assignmentID":3, "status":$(status), "ranking":1, "updateAt":"2021-07-20T17:00:00+09:00"}'	
 
 seed-do-all:
-	@make seed-do userID=1 status=0
+	curl -X POST http://localhost:8080/do \
+	-H 'Content-Type: application/json' \
+  	-d '{"userID":1,"assignmentID":1, "status":0, "ranking":1, "updateAt":"2021-07-02T17:00:00+09:00"}'	
+
+	curl -X POST http://localhost:8080/do \
+	-H 'Content-Type: application/json' \
+  	-d '{"userID":1,"assignmentID":2, "status":0, "ranking":2, "updateAt":"2021-07-09T17:00:00+09:00"}'	
+
+	curl -X POST http://localhost:8080/do \
+	-H 'Content-Type: application/json' \
+  	-d '{"userID":1,"assignmentID":3, "status":0, "ranking":3, "updateAt":"2021-07-10T17:00:00+09:00"}'	
+	
+	curl -X POST http://localhost:8080/do \
+	-H 'Content-Type: application/json' \
+  	-d '{"userID":1,"assignmentID":1, "status":0, "ranking":1, "updateAt":"2021-07-12T17:00:00+09:00"}'	
+
+	curl -X POST http://localhost:8080/do \
+	-H 'Content-Type: application/json' \
+  	-d '{"userID":1,"assignmentID":2, "status":0, "ranking":4, "updateAt":"2021-07-17T17:00:00+09:00"}'
+
+	curl -X POST http://localhost:8080/do \
+	-H 'Content-Type: application/json' \
+  	-d '{"userID":1,"assignmentID":3, "status":2, "ranking":1, "updateAt":"2021-07-20T17:00:00+09:00"}'	
 	@make seed-do userID=2 status=1
 	@make seed-do userID=3 status=2
 	@make seed-do userID=4 status=2

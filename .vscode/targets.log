@@ -8,7 +8,7 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # This program built for i386-pc-mingw32
  
 
-# Make �f�[�^�x�[�X�o�� Tue Jul 20 09:03:02 2021
+# Make �f�[�^�x�[�X�o�� Sat Jul 24 14:55:07 2021
 
 # �ϐ�
 
@@ -40,6 +40,8 @@ WINDIR = C:\WINDOWS
 VSCODE_NLS_CONFIG = {"locale":"ja","availableLanguages":{},"_languagePackSupport":true}
 # ���ϐ�
 ONEDRIVE = C:\Users\shinj\OneDrive
+# makefile �ϐ� (`makefile', 199 �s�ڂ���)
+userID = 2
 # ���ϐ�
 PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
 # makefile �ϐ� (`makefile', 1 �s�ڂ���)
@@ -54,16 +56,21 @@ VSCODE_AMD_ENTRYPOINT = vs/workbench/services/extensions/node/extensionHostProce
 VSCODE_VERBOSE_LOGGING = true
 # ���ϐ�
 PROGRAMW6432 = C:\Program Files
+# makefile �ϐ� (`makefile', 192 �s�ڂ���)
+status = 1
+# makefile �ϐ� (`makefile', 203 �s�ڂ���)
+groupID = 1
 # ���ϐ�
 CONDA_ENVS_PATH = D:\conda\envs
 # ���ϐ�
 PROGRAMDATA = C:\ProgramData
 # ���ϐ�
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-c25b8e07-83aa-44b8-bdaa-4ca4a9d63076-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-c215e53f-4814-439e-a677-ffd35ac0c061-sock
 # ���ϐ�
 VSCODE_CWD = C:\Users\shinj\AppData\Local\Programs\Microsoft VS Code
 # ���ϐ�
-GOPROXY = https://proxy.golang.org,direct
+GOPROXY = http 
+s://proxy.golang.org,direct
 # ���ϐ�
 PATH = C:\Program Files\ffmpeg-4.1.3-win64-static\bin;C:\Program Files\Git\cmd;C:\wget\bin\wget;C:\Program Files (x86)\mingw-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0\mingw32\bin;C:\xampp\php;C:\Program Files\nodejs\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;D:\AWS\cli\;C:\Program Files (x86)\Mercurial;D:\Go\bin;C:\Users\shinj\AppData\Local\Microsoft\WindowsApps;C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;C:\tools\sqlite3;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Users\shinj\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\heroku\bin;C:\Users\shinj\AppData\Roaming\npm;C:\Program Files\PostgreSQL\12\bin;C:\Users\shinj\Flutter\flutter\bin;C:\Users\shinj\ngrok;C:\Users\shinj\AppData\Local\Microsoft\WindowsApps;C:\Program Files (x86)\GnuWin32\bin;D:\GCP\google-cloud-sdk\bin;D:\GCP\google-cloud-sdk\bin:$PATH;D:\AWS\cli;C:\MinGW\msys\1.0\bin;C:\MinGW\bin;D:\LLVM\bin;C:\Users\shinj\go\bin;
 # ���ϐ�
@@ -91,7 +98,7 @@ NVTOOLSEXT_PATH = C:\Program Files\NVIDIA Corporation\NvToolsExt\
 # �����ϐ�
 %F = $(notdir $%)
 # ���ϐ�
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_10568_NDXCGCXLXNOGMRZQ
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_14088_ZFZQYCTUYCLOUEAO
 # ���ϐ�
 VSCODE_PIPE_LOGGING = true
 # ���ϐ�
@@ -106,6 +113,8 @@ ORIGINAL_XDG_CURRENT_DESKTOP = undefined
 USERNAME = shinj
 # ���ϐ�
 PUBLIC = C:\Users\Public
+# makefile �ϐ� (`makefile', 4 �s�ڂ���)
+dev_url = http://localhost:8080/
 # ���ϐ�
 GOMODCACHE = D:\Go\pkg\mod
 # ���ϐ�
@@ -117,7 +126,7 @@ COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
 # ���ϐ�
 LOGONSERVER = \\DESKTOP-C2GKRUA
 # makefile �ϐ� (`makefile', 1 �s�ڂ���)
-db_container = anonymous_db_1
+db_container = anonymous_bk_db_1
 # ���ϐ�
 ONEDRIVECONSUMER = C:\Users\shinj\OneDrive
 # ���ϐ�
@@ -182,6 +191,8 @@ MAKEFILES :=
 VSCODE_BROWSER_CODE_LOADING = bypassHeatCheck
 # �����ϐ�
 <F = $(notdir $<)
+# makefile �ϐ� (`makefile', 3 �s�ڂ���)
+pro_url = https://anonymous-bk.herokuapp.com/
 # ���ϐ�
 LC_ALL = C
 # �����ϐ�
@@ -203,13 +214,15 @@ PROCESSOR_LEVEL = 6
 # ���ϐ�
 FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # ���ϐ�
-VSCODE_PID = 10568
-# makefile �ϐ� (`makefile', 61 �s�ڂ���)
+VSCODE_PID = 14088
+# makefile �ϐ� (`makefile', 152 �s�ڂ���)
 pass = ppp
+# makefile �ϐ� (`makefile', 2 �s�ڂ���)
+env = dev
 # ���ϐ�
 USERDOMAIN_ROAMINGPROFILE = DESKTOP-C2GKRUA
 # �ϐ��Z�b�g�̃n�b�V���e�[�u���̏��:
-# Load=98/1024=10%, Rehash=0, Collisions=10/117=9%
+# Load=104/1024=10%, Rehash=0, Collisions=12/124=10%
 
 # Pattern-specific Variable Values
 
@@ -234,7 +247,7 @@ USERDOMAIN_ROAMINGPROFILE = DESKTOP-C2GKRUA
 # C:\Program Files (x86)\GnuWin32\bin (key C:/Program Files (x86)/GnuWin32/bin, mtime 1621153980): 5 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
 # C:\MinGW\msys\1.0\bin (key C:/MinGW/msys/1.0/bin, mtime 1625021469): 108 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C���� (�����܂ł�).
 # C:\WINDOWS\System32\OpenSSH\: ��Ԃ𒲂ׂ��܂���ł���.
-# C:\Program Files\PostgreSQL\12\bin (key C:/Program Files/PostgreSQL/12/bin, mtime 1600585328): 71 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# C:\Program Files\PostgreSQL\12\bin: ��Ԃ𒲂ׂ��܂���ł���.
 # C:\WINDOWS (key C:/WINDOWS, mtime 1574865339): 128 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
 # C:\Users\shinj\ngrok (key C:/Users/shinj/ngrok, mtime 1599486842): 3 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
 # C:\Program Files (x86)\mingw-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0\mingw32\bin (key C:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin, mtime 1564229662): 58 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
@@ -244,13 +257,14 @@ USERDOMAIN_ROAMINGPROFILE = DESKTOP-C2GKRUA
 # C:\Program Files\dotnet\ (key C:/Program Files/dotnet/, mtime 1607068717): 8 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
 # C:\ProgramData\DockerDesktop\version-bin (key C:/ProgramData/DockerDesktop/version-bin, mtime 1621154802): 2 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
 # C:\Program Files\Git\cmd (key C:/Program Files/Git/cmd, mtime 1561802016): 8 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
-# C:\WINDOWS\system32 (key C:/WINDOWS/system32, mtime 1626739146): 2971 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
-# C:\Program Files (x86)\Mercurial (key C:/Program Files (x86)/Mercurial, mtime 1624980350): 25 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# C:\WINDOWS\system32 (key C:/WINDOWS/system32, mtime 1627105692): 2971 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# C:\Program Files (x86)\Mercurial (key C:/Program Files (x86)/Mercurial, mtime 1624980350): 25 �̃t�@�C��, 0 �̓K�p�s�\�t� 
+@�C����.
 # D:\Go\bin (key D:/Go/bin, mtime 1626496468): 14 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
 # C:\Users\shinj\AppData\Local\Programs\Microsoft VS Code\bin (key C:/Users/shinj/AppData/Local/Programs/Microsoft VS Code/bin, mtime 1626390572): 4 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
-# C:\Users\shinj\AppData\Roaming\npm (key C:/Users/shinj/AppData/Roaming/npm, mtime 1620815945): 48 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# C:\Users\shinj\AppData\Roaming\npm (key C:/Users/shinj/AppData/Roaming/npm, mtime 1626953978): 54 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
 
-# 3811 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C���� (32 �̃f�B���N�g����).
+# 3746 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C���� (32 �̃f�B���N�g����).
 
 # �Öك��[��
 
@@ -262,15 +276,23 @@ rs:
 #  �Öك��[���̒T���͍s���܂���ł���.
 #  �C���������`�F�b�N����邱�Ƃ͂���܂���.
 #  �t�@�C���͍X�V����Ă��܂���.
-#  ���s����R�}���h (`makefile', 10 �s�ڂ���):
+#  ���s����R�}���h (`makefile', 13 �s�ڂ���):
 	docker-compose restart	
+	
+
+test-user-put:
+#  �Öك��[���̒T���͍s���܂���ł���.
+#  �C���������`�F�b�N����邱�Ƃ͂���܂���.
+#  �t�@�C���͍X�V����Ă��܂���.
+#  ���s����R�}���h (`makefile', 197 �s�ڂ���):
+	curl -X PUT http://localhost:8080/user/$(userID)?groupID=$(groupID)
 	
 
 migrate-rollback:
 #  �Öك��[���̒T���͍s���܂���ł���.
 #  �C���������`�F�b�N����邱�Ƃ͂���܂���.
 #  �t�@�C���͍X�V����Ă��܂���.
-#  ���s����R�}���h (`makefile', 19 �s�ڂ���):
+#  ���s����R�}���h (`makefile', 22 �s�ڂ���):
 	curl -X GET http://localhost:8080/migrate/down
 	
 
@@ -278,9 +300,36 @@ migrate-refresh:
 #  �Öك��[���̒T���͍s���܂���ł���.
 #  �C���������`�F�b�N����邱�Ƃ͂���܂���.
 #  �t�@�C���͍X�V����Ă��܂���.
-#  ���s����R�}���h (`makefile', 22 �s�ڂ���):
+#  ���s����R�}���h (`makefile', 25 �s�ڂ���):
 	@make migrate-rollback
 	@make migrate
+	
+
+seed-group:
+#  �Öك��[���̒T���͍s���܂���ł���.
+#  �C���������`�F�b�N����邱�Ƃ͂���܂���.
+#  �t�@�C���͍X�V����Ă��܂���.
+#  ���s����R�}���h (`makefile', 58 �s�ڂ���):
+	curl -X POST http://localhost:8080/group \
+	-H 'Content-Type: application/json' \
+	-d '{"name":"hibikino"}'
+	
+
+test-user-get:
+#  �Öك��[���̒T���͍s���܂���ł���.
+#  �C���������`�F�b�N����邱�Ƃ͂���܂���.
+#  �t�@�C���͍X�V����Ă��܂���.
+#  ���s����R�}���h (`makefile', 201 �s�ڂ���):
+	curl -X GET http://localhost:8080/user/$(userID)
+	
+
+test-ass:
+#  �Öك��[���̒T���͍s���܂���ł���.
+#  �C���������`�F�b�N����邱�Ƃ͂���܂���.
+#  �t�@�C���͍X�V����Ă��܂���.
+#  ���s����R�}���h (`makefile', 189 �s�ڂ���):
+	@make test-group-reg
+	curl -X GET http://localhost:8080/assignment/$(groupID)
 	
 
 # �^�[�Q�b�g�ł͂���܂���:
@@ -292,29 +341,62 @@ all:
 # �ϐ��Z�b�g�̃n�b�V���e�[�u���̏��:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-seed-do-single:
+seed-do:
 #  �Öك��[���̒T���͍s���܂���ł���.
 #  �C���������`�F�b�N����邱�Ƃ͂���܂���.
 #  �t�@�C���͍X�V����Ă��܂���.
-#  ���s����R�}���h (`makefile', 26 �s�ڂ���):
+#  ���s����R�}���h (`makefile', 88 �s�ڂ���):
 	curl -X POST http://localhost:8080/do \
 	-H 'Content-Type: application/json' \
-	-d '{"userID":1,"assignmentID":1, "status":2, "ranking":1, "updateAt":"2021-07-02T17:00:00+09:00"}'	
+	-d '{"userID":$(userID),"assignmentID":1, "status":2, "ranking":1, "updateAt":"2021-07-02T17:00:00+09:00"}'	
 	curl -X POST http://localhost:8080/do \
 	-H 'Content-Type: application/json' \
-	-d '{"userID":1,"assignmentID":1, "status":2, "ranking":2, "updateAt":"2021-07-09T17:00:00+09:00"}'	
+	-d '{"userID":$(userID),"assignmentID":2, "status":$(status), "ranking":2, "updateAt":"2021-07-09T17:00:00+09:00"}'	
 	curl -X POST http://localhost:8080/do \
 	-H 'Content-Type: application/json' \
-	-d '{"userID":1,"assignmentID":1, "status":2, "ranking":3, "updateAt":"2021-07-10T17:00:00+09:00"}'	
+	-d '{"userID":$(userID),"assignmentID":3, "status":2, "ranking":3, "updateAt":"2021-07-10T17:00:00+09:00"}'	
 	curl -X POST http://localhost:8080/do \
 	-H 'Content-Type: application/json' \
-	-d '{"userID":1,"assignmentID":1, "status":2, "ranking":1, "updateAt":"2021-07-12T17:00:00+09:00"}'	
+	-d '{"userID":$(userID),"assignmentID":1, "status":$(status), "ranking":1, "updateAt":"2021-07-12T17:00:00+09:00"}'	
 	curl -X POST http://localhost:8080/do \
 	-H 'Content-Type: application/json' \
-	-d '{"userID":1,"assignmentID":1, "status":2, "ranking":4, "updateAt":"2021-07-17T17:00:00+09:00"}'
+	-d '{"userID":$(userID),"assignmentID":2, "status":2, "ranking":4, "updateAt":"2021-07-17T17:00:00+09:00"}'
 	curl -X POST http://localhost:8080/do \
 	-H 'Content-Type: application/json' \
-	-d '{"userID":1,"assignmentID":1, "status":2, "ranking":1, "updateAt":"2021-07-20T17:00:00+09:00"}'		
+	-d '{"userID":$(userID),"assignmentID":3, "status":$(status), "ranking":1, "updateAt":"2021-07-20T17:00:00+09:00"}'	
+	
+
+seed-ass:
+#  �Öك��[���̒T���͍s���܂���ł���.
+#  �C���������`�F�b�N����邱�Ƃ͂���܂���.
+#  �t�@�C���͍X�V����Ă��܂���.
+#  ���s����R�}���h (`makefile', 63 �s�ڂ���):
+	curl -X POST http://localhost:8080/assignment \
+	-H 'Content-Type: application/json' \
+	-d '{"name":"math", "due":"monday","groupID":1}'
+	curl -X POST http://localhost:8080/assignment \
+	-H 'Content-Type: application/json' \
+	-d '{"name":"english", "due":"tuesday","groupID":1}'
+	curl -X POST http://localhost:8080/assignment \
+	-H 'Content-Type: application/json' \
+	-d '{"name":"statistics", "due":"friday","groupID":1}'
+	curl -X POST http://localhost:8080/assignment \
+	-H 'Content-Type: application/json' \
+	-d '{"name":"japanese", "due":"monday","groupID":2}'
+	curl -X POST http://localhost:8080/assignment \
+	-H 'Content-Type: application/json' \
+	-d '{"name":"math2", "due":"tuesday","groupID":2}'
+	curl -X POST http://localhost:8080/assignment \
+	-H 'Content-Type: application/json' \
+	-d '{"name":"statistics", "due":"friday","groupID":2}'
+	
+
+test-do-get-spec:
+#  �Öك��[���̒T���͍s���܂���ł���.
+#  �C���������`�F�b�N����邱�Ƃ͂���܂���.
+#  �t�@�C���͍X�V����Ă��܂���.
+#  ���s����R�}���h (`makefile', 182 �s�ڂ���):
+	curl -X GET http://localhost:8080/do/userID/1
 	
 
 # �^�[�Q�b�g�ł͂���܂���:
@@ -327,54 +409,130 @@ up:
 #  �Öك��[���̒T���͍s���܂���ł���.
 #  �C���������`�F�b�N����邱�Ƃ͂���܂���.
 #  �t�@�C���͍X�V����Ă��܂���.
-#  ���s����R�}���h (`makefile', 4 �s�ڂ���):
+#  ���s����R�}���h (`makefile', 7 �s�ڂ���):
 	docker-compose up -d
+	
+
+seed-do-all:
+#  �Öك��[���̒T���͍s���܂���ł���.
+#  �C���������`�F�b�N����邱�Ƃ͂���܂���.
+#  �t�@�C���͍X�V����Ă��܂���.
+#  ���s����R�}���h (`makefile', 113 �s�ڂ���):
+	curl -X POST http://localhost:8080/do \
+	-H 'Content-Type: application/json' \
+	-d '{"userID":1,"assignmentID":1, "status":0, "ranking":1, "updateAt":"2021-07-02T17:00:00+09:00"}'	
+	curl -X POST http://localhost:8080/do \
+	-H 'Content-Type: application/json' \
+	-d '{"userID":1,"assignmentID":2, "status":0, "ranking":2, "updateAt":"2021-07-09T17:00:00+09:00"}'	
+	curl -X POST http://localhost:8080/do \
+	-H 'Content-Type: application/json' \
+	-d '{"userID":1,"assignmentID":3, "status":0, "ranking":3, "updateAt":"2021-07-10T17:00:00+09:00"}'	
+	curl -X POST http://localhost:8080/do \
+	-H 'Content-Type: application/json' \
+	-d '{"userID":1,"assignmentID":1, "status":0, "ranking":1, "updateAt":"2021-07-12T17:00:00+09:00"}'	
+	curl -X POST http://localhost:8080/do \
+	-H 'Content-Type: application/json' \
+	-d '{"userID":1,"assignmentID":2, "status":0, "ranking":4, "updateAt":"2021-07-17T17:00:00+09:00"}'
+	curl -X POST http://localhost:8080/do \
+	-H 'Content-Type: application/json' \
+	-d '{"userID":1,"assignmentID":3, "status":2, "ranking":1, "updateAt":"2021-07-20T17:00:00+09:00"}'	
+	@make seed-do userID=2 status=1
+	@make seed-do userID=3 status=2
+	@make seed-do userID=4 status=2
+	@make seed-do userID=5 status=0
 	
 
 test-group-reg:
 #  �Öك��[���̒T���͍s���܂���ł���.
 #  �C���������`�F�b�N����邱�Ƃ͂���܂���.
 #  �t�@�C���͍X�V����Ă��܂���.
-#  ���s����R�}���h (`makefile', 73 �s�ڂ���):
+#  ���s����R�}���h (`makefile', 164 �s�ڂ���):
 	curl -X POST http://localhost:8080/group \
 	-H 'Content-Type: application/json' \
 	-d '{"name":"hibikino"}'
 	
 
+test-belong:
+#  �Öك��[���̒T���͍s���܂���ł���.
+#  �C���������`�F�b�N����邱�Ƃ͂���܂���.
+#  �t�@�C���͍X�V����Ă��܂���.
+#  ���s����R�}���h (`makefile', 211 �s�ڂ���):
+	curl -X PUT http://localhost:8080/belong/group/$(groupID)?userID=$(userID)
+	
+
 # �^�[�Q�b�g�ł͂���܂���:
 makefile:
 #  �Öك��[���̒T�����s���܂���.
-#  �ŏI�C�� 2021-07-19 20:04:32
+#  �ŏI�C�� 2021-07-24 12:41:09
 #  �t�@�C���͍X�V����Ă��܂�.
 #  �X�V�ɐ������܂���.
 # �ϐ��Z�b�g�̃n�b�V���e�[�u���̏��:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
+test-group-get:
+#  �Öك��[���̒T���͍s���܂���ł���.
+#  �C���������`�F�b�N����邱�Ƃ͂���܂���.
+#  �t�@�C���͍X�V����Ă��܂���.
+#  ���s����R�}���h (`makefile', 205 �s�ڂ���):
+	curl -X GET http://localhost:8080/group/$(groupID)
+	
+
 test-do-reg:
 #  �Öك��[���̒T���͍s���܂���ł���.
 #  �C���������`�F�b�N����邱�Ƃ͂���܂���.
 #  �t�@�C���͍X�V����Ă��܂���.
-#  ���s����R�}���h (`makefile', 83 �s�ڂ���):
+#  ���s����R�}���h (`makefile', 174 �s�ڂ���):
 	curl -X POST http://localhost:8080/do \
 	-H 'Content-Type: application/json' \
 	-d '{"userID":1,"assignmentID":1, "status":2, "ranking":1, "updateAt":"2021-07-20T17:00:00+09:00"}'		
+	
+
+test-belong-all:
+#  �Öك��[���̒T���͍s���܂���ł���.
+#  �C���������`�F�b�N����邱�Ƃ͂���܂���.
+#  �t�@�C���͍X�V����Ă��܂���.
+#  ���s����R�}���h (`makefile', 214 �s�ڂ���):
+	@make migrate-refresh
+	@make seed-user-all
+	@make seed-group
+	@make test-belong groupID=1 userID=1
+	@make test-belong groupID=1 userID=2
+	@make test-belong groupID=1 userID=3
+	@make test-belong groupID=1 userID=4
+	@make test-belong groupID=1 userID=5
+	
+
+test-do-put:
+#  �Öك��[���̒T���͍s���܂���ł���.
+#  �C���������`�F�b�N����邱�Ƃ͂���܂���.
+#  �t�@�C���͍X�V����Ă��܂���.
+#  ���s����R�}���h (`makefile', 194 �s�ڂ���):
+	curl -X PUT http://localhost:8080/do?userID=1\&assignmentID=1\&status=$(status)
 	
 
 test-ass-reg:
 #  �Öك��[���̒T���͍s���܂���ł���.
 #  �C���������`�F�b�N����邱�Ƃ͂���܂���.
 #  �t�@�C���͍X�V����Ă��܂���.
-#  ���s����R�}���h (`makefile', 68 �s�ڂ���):
+#  ���s����R�}���h (`makefile', 159 �s�ڂ���):
 	curl -X POST http://localhost:8080/assignment \
 	-H 'Content-Type: application/json' \
-	-d '{"name":"math", "due":"2021-07-23T17:00:00+09:00"}'
+	-d '{"name":"math", "due":"monday"}'
+	
+
+test-group-get-all:
+#  �Öك��[���̒T���͍s���܂���ł���.
+#  �C���������`�F�b�N����邱�Ƃ͂���܂���.
+#  �t�@�C���͍X�V����Ă��܂���.
+#  ���s����R�}���h (`makefile', 208 �s�ڂ���):
+	curl -X GET http://localhost:8080/group
 	
 
 test-do-get:
 #  �Öك��[���̒T���͍s���܂���ł���.
 #  �C���������`�F�b�N����邱�Ƃ͂���܂���.
 #  �t�@�C���͍X�V����Ă��܂���.
-#  ���s����R�}���h (`makefile', 88 �s�ڂ���):
+#  ���s����R�}���h (`makefile', 179 �s�ڂ���):
 	curl -X GET http://localhost:8080/do?userID=1\&year=2021\&month=7 
 	
 
@@ -382,8 +540,27 @@ migrate:
 #  �Öك��[���̒T���͍s���܂���ł���.
 #  �C���������`�F�b�N����邱�Ƃ͂���܂���.
 #  �t�@�C���͍X�V����Ă��܂���.
-#  ���s����R�}���h (`makefile', 16 �s�ڂ���):
+#  ���s����R�}���h (`makefile', 19 �s�ڂ���):
 	curl -X GET http://localhost:8080/migrate/up
+	
+
+test-do-week:
+#  �Öك��[���̒T���͍s���܂���ł���.
+#  �C���������`�F�b�N����邱�Ƃ͂���܂���.
+#  �t�@�C���͍X�V����Ă��܂���.
+#  ���s����R�}���h (`makefile', 185 �s�ڂ���):
+	curl -X GET http://localhost:8080/do/week/$(userID)
+	
+
+seed-all:
+#  �Öك��[���̒T���͍s���܂���ł���.
+#  �C���������`�F�b�N����邱�Ƃ͂���܂���.
+#  �t�@�C���͍X�V����Ă��܂���.
+#  ���s����R�}���h (`makefile', 29 �s�ڂ���):
+	@make seed-user-all
+	@make seed-do-all
+	@make seed-ass
+	@make seed-group
 	
 
 # �^�[�Q�b�g�ł͂���܂���:
@@ -396,17 +573,47 @@ test-user-val:
 #  �Öك��[���̒T���͍s���܂���ł���.
 #  �C���������`�F�b�N����邱�Ƃ͂���܂���.
 #  �t�@�C���͍X�V����Ă��܂���.
-#  ���s����R�}���h (`makefile', 63 �s�ڂ���):
+#  ���s����R�}���h (`makefile', 154 �s�ڂ���):
 	curl -X POST http://localhost:8080/validate/user \
 	-H 'Content-Type: application/json' \
 	-d '{"password":"$(pass)", "email":"joe@invalid-domain"}'
+	
+
+seed-user:
+#  �Öك��[���̒T���͍s���܂���ł���.
+#  �C���������`�F�b�N����邱�Ƃ͂���܂���.
+#  �t�@�C���͍X�V����Ă��܂���.
+#  ���s����R�}���h (`makefile', 35 �s�ڂ���):
+	curl -X POST http://localhost:8080/user \
+	-H 'Content-Type: application/json' \
+	-d '{"firstname":"eto","lastname":"shinji", "password":"ppp", "email":"aaa@mail.com", "groupID":1}'
+	
+
+seed-user-all:
+#  �Öك��[���̒T���͍s���܂���ł���.
+#  �C���������`�F�b�N����邱�Ƃ͂���܂���.
+#  �t�@�C���͍X�V����Ă��܂���.
+#  ���s����R�}���h (`makefile', 40 �s�ڂ���):
+	@make seed-user
+	curl -X POST http://localhost:8080/user \
+	-H 'Content-Type: application/json' \
+	-d '{"firstname":"yoshida","lastname":"takanori", "password":"ppp", "email":"bbb@mail.com", "groupID":1}'
+	curl -X POST http://localhost:8080/user \
+	-H 'Content-Type: application/json' \
+	-d '{"firstname":"tanaka","lastname":"ryouya", "password":"ppp", "email":"ccc@mail.com", "groupID":1}'
+	curl -X POST http://localhost:8080/user \
+	-H 'Content-Type: application/json' \
+	-d '{"firstname":"hosida","lastname":"kyousuke", "password":"ppp", "email":"ddd@mail.com", "groupID":1}'
+	curl -X POST http://localhost:8080/user \
+	-H 'Content-Type: application/json' \
+	-d '{"firstname":"ogata","lastname":"miduho", "password":"ppp", "email":"eee@mail.com", "groupID":1}'
 	
 
 test-share-reg:
 #  �Öك��[���̒T���͍s���܂���ł���.
 #  �C���������`�F�b�N����邱�Ƃ͂���܂���.
 #  �t�@�C���͍X�V����Ă��܂���.
-#  ���s����R�}���h (`makefile', 78 �s�ڂ���):
+#  ���s����R�}���h (`makefile', 169 �s�ڂ���):
 	curl -X POST http://localhost:8080/share \
 	-H 'Content-Type: application/json' \
 	-d '{"groupID":1,"assignmentID":1}'
@@ -416,7 +623,7 @@ exec-db:
 #  �Öك��[���̒T���͍s���܂���ł���.
 #  �C���������`�F�b�N����邱�Ƃ͂���܂���.
 #  �t�@�C���͍X�V����Ă��܂���.
-#  ���s����R�}���h (`makefile', 13 �s�ڂ���):
+#  ���s����R�}���h (`makefile', 16 �s�ڂ���):
 	docker exec -it $(db_container) bash
 	
 
@@ -424,31 +631,32 @@ seed-refresh:
 #  �Öك��[���̒T���͍s���܂���ł���.
 #  �C���������`�F�b�N����邱�Ƃ͂���܂���.
 #  �t�@�C���͍X�V����Ă��܂���.
-#  ���s����R�}���h (`makefile', 52 �s�ڂ���):
+#  ���s����R�}���h (`makefile', 143 �s�ڂ���):
 	@make migrate-refresh
-	@make seed-do-single
+	@make seed-all
 	
 
 down:
 #  �Öك��[���̒T���͍s���܂���ł���.
 #  �C���������`�F�b�N����邱�Ƃ͂���܂���.
 #  �t�@�C���͍X�V����Ă��܂���.
-#  ���s����R�}���h (`makefile', 7 �s�ڂ���):
+#  ���s����R�}���h (`makefile', 10 �s�ڂ���):
 	docker-compose down
 	
 
 test-user-reg:
 #  �Öك��[���̒T���͍s���܂���ł���.
 #  �C���������`�F�b�N����邱�Ƃ͂���܂���.
-#  �t�@�C���͍X�V����Ă��܂���.
-#  ���s����R�}���h (`makefile', 57 �s�ڂ���):
+#  �t�@�C� 
+��͍X�V����Ă��܂���.
+#  ���s����R�}���h (`makefile', 148 �s�ڂ���):
 	curl -X POST http://localhost:8080/user \
 	-H 'Content-Type: application/json' \
-	-d '{"firstname":"eto","lastname":"shinji", "password":"ppp", "email":"joe@invalid-domain"}'
+	-d '{"firstname":"eto","lastname":"shinji", "password":"ppp", "email":"joe@invalid-domain", "groupID":1}'
 	
 
 # �t�@�C���n�b�V���e�[�u���̏��:
-# Load=20/1024=2%, Rehash=0, Collisions=0/31=0%
+# Load=36/1024=4%, Rehash=0, Collisions=0/47=0%
 # VPATH �T���p�X
 
 # `vpath' �T���p�X�͂���܂���
@@ -457,10 +665,11 @@ test-user-reg:
 
 # # of strings in strcache: 1
 # # of strcache buffers: 1
-# strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
+# strcache size: tota 
+l = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Make �f�[�^�x�[�X�I�� Tue Jul 20 09:03:02 2021
+# Make �f�[�^�x�[�X�I�� Sat Jul 24 14:55:07 2021
 
  
 make.exe: *** �^�[�Q�b�g `all' �� make ���郋�[��������܂���.  ���~.
