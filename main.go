@@ -50,8 +50,9 @@ type Assignment struct {
 }
 
 type Do struct {
-	UserID       uint      `json:"userID"`
-	AssignmentID uint      `json:"assignmentID"`
+	Id           uint      `json:"id" gorm:"AUTO_INCREMENT"`
+	UserID       uint      `json:"userID" gorm:"foreignKey:UserID"`
+	AssignmentID uint      `json:"assignmentID" gorm:"foreignKey:AssignmentID"`
 	Status       uint      `json:"status"`
 	Ranking      uint      `json:"ranking"`
 	UpdateAt     time.Time `json:"updateAt"`
@@ -254,7 +255,7 @@ func validate_user(c echo.Context) (err error) {
 	user := new(User)
 	if err = c.Bind(user); err != nil {
 		message := ValidateUserErrorMessage{"vaiudation failed", false, err.Error()}
-		return c.JSON(http.StatusBadRequest, message)
+		return c.JSON(http.StatusOK, message)
 	}
 
 	validate := new(User)
@@ -345,6 +346,22 @@ func post_assignment(c echo.Context) error {
 	}
 
 	db.Create(&assignment)
+
+	groupID := assignment.GroupID
+	group := new(Group)
+	if err := db.Find(&group, "id=?", groupID); err.Error != nil {
+		message := GetDoErrorMessage{"Group get failed", false, err.Error}
+		return c.JSON(http.StatusOK, message)
+	}
+	db.Model(&group).Related(&group.Users)
+	fmt.Print("\n", group)
+	for _, user := range group.Users {
+		db.Create(&Do{
+			UserID:       user.Id,
+			AssignmentID: assignment.Id,
+			UpdateAt:     time.Now(),
+		})
+	}
 	message := PostAssignmentSuccessMessage{"Assignment successfully create", true}
 
 	return c.JSON(http.StatusOK, message)
@@ -495,8 +512,9 @@ func put_do(c echo.Context) error {
 		return c.JSON(http.StatusOK, message)
 	}
 	fmt.Print("\ndo: ", do)
-	do.Status = uint(status)
-	db.Save(&do)
+	// do.Status = uint(status)
+	// db.Save(&do)
+	db.Model(&do).Update("Status", uint(status))
 
 	message := SuccessMessage{"Putting do success", true}
 	return c.JSON(http.StatusOK, message)
@@ -518,8 +536,9 @@ func belong_group(c echo.Context) error {
 		return c.JSON(http.StatusOK, message)
 	}
 
-	user.GroupID = uint(groupID)
-	db.Save(&user)
+	// user.GroupID = uint(groupID)
+	// db.Save(&user)
+	db.Model(&user).Update("GroupID", uint(groupID))
 
 	message := SuccessMessage{"Record updated", true}
 	return c.JSON(http.StatusOK, message)
@@ -564,7 +583,7 @@ func get_group(c echo.Context) error {
 	}
 	db.Model(&group).Related(&group.Users)
 
-	message := GetGroupSuccessMessage{"Record updated", true, *group}
+	message := GetGroupSuccessMessage{"Get group Successful", true, *group}
 	return c.JSON(http.StatusOK, message)
 }
 
